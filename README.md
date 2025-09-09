@@ -33,7 +33,7 @@ If such a substring exists, print its minimum length; otherwise, print \(-1\).
 
 
 ## Constraints
-- \(1 \leq |s| \leq 200000\)  
+- \[1 \leq |s| \leq 200000\]  
 - \(1 \leq q \leq 100000\)  
 - \(1 \leq |a|, |b| \leq 10\)  
 - \(0 \leq L \leq R \leq |s|\)  
