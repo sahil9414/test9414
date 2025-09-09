@@ -85,8 +85,8 @@ Input constraints guarantee that $a$ and $b$ are valid islands in $A(n)$.
 ```
 
  - **Explanation:**(input: $6\ 4$ with queries $(1,8)$, $(2,7)$, $(3,5)$, $(1,4)$, $(6,8)$, $(2,3)$)
-  - In $A(4)$: left is $A(3)$ on $\{1..5\}$, right is $A(2)$ (triangle) on $\{6,7,8\}$; portals $(1,6)$ and $(5,6)$.
-  - $(1,8)$ goes $1\!\to\!6\!\to\!8$ $\Rightarrow d=2,\ c=1$; $(2,7)$ goes via $1$: $2\!\to\!1\!\to\!6\!\to\!7$ $\Rightarrow d=3,\ c=1$.
-  - Neighbors give $(1,4)$, $(6,8)$, $(2,3)$ each $d=1,\ c=1$; $(3,5)$ uses $3\!\to\!4\!\to\!5$ $\Rightarrow d=2,\ c=1$.
+    - In $A(4)$: left is $A(3)$ on $\{1..5\}$, right is $A(2)$ (triangle) on $\{6,7,8\}$; portals $(1,6)$ and $(5,6)$.
+    - $(1,8)$ goes $1\!\to\!6\!\to\!8$ $\Rightarrow d=2,\ c=1$; $(2,7)$ goes via $1$: $2\!\to\!1\!\to\!6\!\to\!7$ $\Rightarrow d=3,\ c=1$.
+    - Neighbors give $(1,4)$, $(6,8)$, $(2,3)$ each $d=1,\ c=1$; $(3,5)$ uses $3\!\to\!4\!\to\!5$ $\Rightarrow d=2,\ c=1$.
 
 
