@@ -1,124 +1,92 @@
-# Runes Between the Relics
+# Spiral Archipelago — Twin Portals
 Time Limit: **2 seconds**  
 Memory Limit: **512 MB**
 
-An archaeologist discovers a long mural etched with runic engravings in a single uninterrupted line. According to lore, pairs of rune sequences separated by a precise empty space mark entrances to hidden chambers. Your mission is to help locate the shortest mural panel that contains two target rune sequences $a$ and $b$ with a valid empty space (gap) between them. Either sequence may appear first, but they must not overlap.
+The Spiral Archipelago is built in tiers. Tier $k$ contains $S[k]$ islands labeled $1$ through $S[k]$. The sizes follow:  
+- $S[0] = 1$, $S[1] = 2$, and for $k \geq 2$, $S[k] = S[k-1] + S[k-2]$.
 
-You are given a string $s$ consisting of lowercase English letters. There are $q$ independent queries. Each query gives two non-empty patterns $a$ and $b$ and two integers $L$ and $R$.
+The tier- $k$ archipelago $A(k)$ is constructed as follows:
+- $A(k)$ has $S[k]$ islands labeled $1..S[k]$.
+- For $k \geq 2$, let $m = S[k-1]$ and $r = m + 1$.  
+  - Islands $1..m$ form a copy of $A(k-1)$ (labels unchanged).  
+  - Islands $r..S[k]$ form a copy of $A(k-2)$ (with labels increased by $m$).  
+  - Two additional bidirectional edges (twin portals) are added:  
+    - $(1, r)$ and $(m, r)$.  
+- All edges (both inherited from the sub-archipelagos and the two portals) are bidirectional and have unit cost.
 
-For each query, find the minimum length of a substring of $s$ that contains one occurrence of $a$ and one occurrence of $b$ such that:
-- The two chosen occurrences do not overlap.
-- The number of characters strictly between the two occurrences (the gap) is between $L$ and $R$ inclusive.
-- You may choose either order ($a$ before $b$ or $b$ before $a$), whichever yields the minimum.
+You are given $t$ travel requests on a fixed tier $n$ archipelago $A(n)$. For each request, given two distinct islands $a$ and $b$ ($1 \leq a, b \leq S[n]$), determine:
+- $d$: the minimal number of edges between $a$ and $b$;  
+- $c$: the number of distinct shortest paths between $a$ and $b$, modulo $1\,000\,000\,007$.
 
-If such a substring exists, print its minimum length; otherwise, print $-1$.
-
-**Definitions:**
-- Positions are $0$-based.
-- An occurrence of pattern $p$ starting at index $i$ covers $[i, i + |p| - 1]$.
-- Two occurrences do not overlap if these intervals are disjoint.
-- If the left occurrence ends at $e$ and the right occurrence starts at $j$, the gap is $j - e - 1$.
-- The minimal covering substring is from the left occurrence’s start to the right occurrence’s end.
-- If $a = b$, you must choose two distinct, non-overlapping occurrences.
-- Non-overlap is mandatory even when $L = 0$.
+Input constraints guarantee that $a$ and $b$ are valid islands in $A(n)$.
 
 
 ## Input Format
-- The first line contains the string $s$ ($1 \leq |s| \leq 200000$), consisting of lowercase English letters.  
-- The second line contains an integer $q$ ($1 \leq q \leq 100000$), the number of queries.  
-- Each of the next $q$ lines contains a string $a$, a string $b$ ($1 \leq |a|, |b| \leq 10$), and integers $L$ and $R$ ($0 \leq L \leq R \leq |s|$), separated by spaces.  
+- The first line contains two integers $t$ and $n$.  
+- Each of the next $t$ lines contains two integers $a$ and $b$ — the endpoints of a query.  
+
 
 ## Output Format
-- For each query, print a single integer — the minimum length of a valid substring, or $-1$ if none exists.
+- For each query, output two integers $d$ and $c$:  
+  - $d$ is the minimum number of edges between $a$ and $b$ in $A(n)$,  
+  - $c$ is the number of distinct shortest paths between $a$ and $b$ modulo $1\,000\,000\,007$.  
 
 
 ## Constraints
-- $1 \leq |s| \leq 200000$  
-- $1 \leq q \leq 100000$  
-- $1 \leq |a|, |b| \leq 10$  
-- $0 \leq L \leq R \leq |s|$  
-- $s, a, b$ consist of lowercase English letters  
-- Occurrences must be non-overlapping  
+- $1 \leq t \leq 100000$  
+- $1 \leq n \leq 1000$  
+- $1 \leq a, b \leq \min(S[n], 10^{16}),\ a \neq b$  
+- $S[0] = 1,\ S[1] = 2,\ S[k] = S[k-1] + S[k-2]$ for $k \geq 2$  
+- All edges are undirected and have unit length  
+- Output $c$ modulo $1\,000\,000\,007$  
 
 
 ## Examples
  - **Input:**
 ```
-stonefirewaterwind
-6
-fire water 0 1
-stone wind 0 100
-one fire 0 1
-fire stone 0 100
-fire water 1 1
-water wind 0 0
+3 3
+2 5
+1 5
+4 5
 ```
 
  - **Output:**
 ```
-9
-18
-7
-9
--1
-9
+3 2
+2 1
+1 1
 ```
 
- - **Explanation:**
-   - fire water 0 1 → pick fire [5..8], water [9..13]; gap $0\in[0,1]$, length $4+5+0=9$.
-   - stone wind 0 100 → stone [0..4], wind [14..17]; gap $9\in[0,100]$, length $5+4+9=18$.
-   - one fire 0 1 → one [2..4], fire [5..8]; gap $0$, length $3+4+0=7$.
-   - fire stone 0 100 → stone [0..4], fire [5..8]; gap $0$, length $5+4+0=9$.
-   - fire water 1 1 → no non-overlapping pair with gap in $[1,1]$ → $-1$.
-   - water wind 0 0 → water [9..13], wind [14..17]; gap $0$, length $5+4+0=9$.
+ - **Explanation:**(input: $3\ 3$ with queries $(2,5)$, $(1,5)$, $(4,5)$)
+   - In $A(3)$: left is $A(2)$ (triangle on $\{1,2,3\}$), right is $A(1)$ (edge $4$–$5$); portals $(1,4)$ and $(3,4)$.
+   - $(2,5)$ has two shortest routes via $4$: $2\!\to\!1\!\to\!4\!\to\!5$ and $2\!\to\!3\!\to\!4\!\to\!5$ $\Rightarrow d=3,\ c=2$.
+   - $(1,5)$ uses $(1,4)$ then $(4,5)$ $\Rightarrow d=2,\ c=1$; $(4,5)$ are neighbors $\Rightarrow d=1,\ c=1$.
+
 
  - **Input:**
 ```
-aaaaabaaaaa
-4
-aa aa 0 0
-aa aa 1 1
-a b 0 0
-a a 4 7
+6 4
+1 8
+2 7
+3 5
+1 4
+6 8
+2 3
 ```
 
  - **Output:**
 ```
-4
-5
-2
-6
-```
- - **Explanation:**
-    - aa aa 0 0 → [0..1] and [2..3]; gap $0$, length $2+2+0=4$.
-    - aa aa 1 1 → [0..1] and [3..4]; gap $1$, length $2+2+1=5$.
-    - a b 0 0 → a [4], b [5]; gap $0$, length $1+1+0=2$.
-    - a a 4 7 → a [1] and a [6]; gap $4$, length $1+1+4=6$.
-
- - **Input:**
-```
-catcatdogcatdog
-5
-cat dog 0 0
-dog cat 1 2
-cat cat 0 3
-at do 0 1
-dog cat 0 3
+2 1
+3 1
+2 1
+1 1
+1 1
+1 1
 ```
 
- - **Output:**
-```
-6
--1
-6
-4
-6
-```
- - **Explanation:**
-   - cat dog 0 0 → cat [3..5], dog [6..8]; gap $0$, length $3+3+0=6$.
-   - dog cat 1 2 → no non-overlapping dog→cat with gap in $[1,2]$ → $-1$.
-   - cat cat 0 3 → cat [0..2] and [3..5]; gap $0$, length $3+3+0=6$.
-   - at do 0 1 → at [4..5], do [6..7]; gap $0$, length $2+2+0=4$.
-   - dog cat 0 3 → dog [6..8], cat [9..11]; gap $0$, length $3+3+0=6$.
+ - **Explanation:**(input: $6\ 4$ with queries $(1,8)$, $(2,7)$, $(3,5)$, $(1,4)$, $(6,8)$, $(2,3)$)
+  - In $A(4)$: left is $A(3)$ on $\{1..5\}$, right is $A(2)$ (triangle) on $\{6,7,8\}$; portals $(1,6)$ and $(5,6)$.
+  - $(1,8)$ goes $1\!\to\!6\!\to\!8$ $\Rightarrow d=2,\ c=1$; $(2,7)$ goes via $1$: $2\!\to\!1\!\to\!6\!\to\!7$ $\Rightarrow d=3,\ c=1$.
+  - Neighbors give $(1,4)$, $(6,8)$, $(2,3)$ each $d=1,\ c=1$; $(3,5)$ uses $3\!\to\!4\!\to\!5$ $\Rightarrow d=2,\ c=1$.
 
 
