@@ -24,9 +24,9 @@ If such a substring exists, print its minimum length; otherwise, print \(-1\).
 
 
 ## Input Format
-- The first line contains the string \(s\) \((1 \leq |s| \leq 200000)\), consisting of lowercase English letters.  
-- The second line contains an integer \(q\) \((1 \leq q \leq 100000)\), the number of queries.  
-- Each of the next \(q\) lines contains a string \(a\), a string \(b\) \((1 \leq |a|, |b| \leq 10)\), and integers \(L\) and \(R\) \((0 \leq L \leq R \leq |s|)\), separated by spaces.  
+- The first line contains the string \(s\) (\(1 \leq |s| \leq 200000\)), consisting of lowercase English letters.  
+- The second line contains an integer \(q\) (\(1 \leq q \leq 100000\)), the number of queries.  
+- Each of the next \(q\) lines contains a string \(a\), a string \(b\) (\(1 \leq |a|, |b| \leq 10\)), and integers \(L\) and \(R\) (\(0 \leq L \leq R \leq |s|\)), separated by spaces.  
 
 ## Output Format
 - For each query, print a single integer — the minimum length of a valid substring, or \(-1\) if none exists.
