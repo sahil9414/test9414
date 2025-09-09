@@ -58,7 +58,7 @@ Input constraints guarantee that $a$ and $b$ are valid islands in $A(n)$.
 ```
 
  - **Explanation:** (input: $3\ 3$ with queries $(2,5)$, $(1,5)$, $(4,5)$ )
-   - In $A(3)$: left is $A(2)$ (triangle on $\{1,2,3\}$), right is $A(1)$ (edge $4$–$5$); portals $(1,4)$ and $(3,4)$.
+   - In $A(3)$: left is $A(2)$ (triangle on $\{1,2,3\}$), right is $A(1)$ (edge $4$– $5$); portals $(1,4)$ and $(3,4)$.
    - $(2,5)$ has two shortest routes via $4$: $2\!\to\!1\!\to\!4\!\to\!5$ and $2\!\to\!3\!\to\!4\!\to\!5$ $\Rightarrow d=3,\ c=2$.
    - $(1,5)$ uses $(1,4)$ then $(4,5)$ $\Rightarrow d=2,\ c=1$; $(4,5)$ are neighbors $\Rightarrow d=1,\ c=1$.
 
